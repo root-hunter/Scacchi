@@ -15,11 +15,20 @@ public class Main {
             );
         */
 
-        stato.scacchiera.scacchiera.get(6).get(7).pezzo = 
-            stato.scacchiera.scacchiera.get(0).get(0).pezzo;
-        stato.scacchiera.scacchiera.get(0).get(0).pezzo = null;
-        
+    
+        stato.scacchiera.scacchiera.get(3).get(3).pezzo = 
+        stato.scacchiera.scacchiera.get(0).get(4).pezzo;
+        stato.scacchiera.scacchiera.get(0).get(4).pezzo = null;
+
+       
+
+        stato.scacchiera.scacchiera.get(5).get(5).pezzo = 
+        stato.scacchiera.scacchiera.get(7).get(5).pezzo;
+        stato.scacchiera.scacchiera.get(7).get(5).pezzo = null;
+
         System.out.println(stato.scacchiera.toString());
-        System.out.println(stato.scacchiera.get(87).listaAttacco(stato));
+
+    
+        System.out.println(stato.scaccoMatto());
     }
 }

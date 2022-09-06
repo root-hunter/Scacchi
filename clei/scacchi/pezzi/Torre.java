@@ -16,60 +16,23 @@ public class Torre extends Pezzo{
     }
 
     public ArrayList<Integer> listaSpostamentoPotenziale (Stato s){
-        ArrayList<Integer> possibiliCase = new ArrayList<>();
+        ArrayList<Integer> possibiliCase = scanScacchiera(s, false);
 
-        int pos = s.scacchiera.get(this);
-        
-        int x = Scacchiera.getX(pos);
-        int y = Scacchiera.getY(pos);
-
-        //POSSIBILE ESECUZIONE IN PARALLELO (MULTI THREAD)
-
-        //DX
-        for(int i = x + 2; i <= Scacchiera.MAX; ++i){
-            if(s.scacchiera.isFree(Scacchiera.getPos(i, y + 1))){
-                possibiliCase.add(Scacchiera.getPos(i, y + 1));
-            }else{
-                break;
-            }
-        }
-
-        //SX
-        for(int i = x; i > 0; --i){
-            if(s.scacchiera.isFree(Scacchiera.getPos(i, y + 1))){
-                possibiliCase.add(Scacchiera.getPos(i, y + 1));
-            }else{
-                break;
-            }
-        }
-        
-        //UP
-        for(int i = y + 2; i <= Scacchiera.MAX; ++i){
-            if(s.scacchiera.isFree(Scacchiera.getPos(x + 1, i))){
-                possibiliCase.add(Scacchiera.getPos(x + 1, i));
-            }else{
-                break;
-            }
-        }
-        
-        //DOWN
-        for(int i = y; i > 0; --i){
-            if(s.scacchiera.isFree(Scacchiera.getPos(x + 1, i))){
-                possibiliCase.add(Scacchiera.getPos(x + 1, i));
-            }else{
-                break;
-            }
-        }
-        
         return possibiliCase;
     }
 
     public boolean attacco(Stato s, int target){
-        return false;
+        return listaAttacco(s).contains(target);
     }
 
     public ArrayList<Integer> listaAttacco(Stato s){
-        ArrayList<Integer> possibiliAttacchi = new ArrayList<>();
+        ArrayList<Integer> possibiliAttacchi = scanScacchiera(s, true);
+        
+        return possibiliAttacchi;  
+      }
+
+    private ArrayList<Integer> scanScacchiera(Stato s, boolean enemyScan) {
+        ArrayList<Integer> posizioniTrovate = new ArrayList<>();
 
         int pos = s.scacchiera.get(this);
 
@@ -79,65 +42,42 @@ public class Torre extends Pezzo{
         //POSSIBILE ESECUZIONE IN PARALLELO (MULTI THREAD)
 
         //DX
-        for(int i = x + 2; i <= Scacchiera.MAX; ++i){
-            int tmpPos = Scacchiera.getPos(i, y + 1);
-
-            if(s.scacchiera.isFree(tmpPos)){
-                possibiliAttacchi.add(tmpPos);
-            }else{
-                if(s.scacchiera.isNotFree(tmpPos) 
-                    && s.scacchiera.isEnemy(pos, tmpPos)){
-                    possibiliAttacchi.add(tmpPos);
+        controlloLaterale(s, enemyScan, posizioniTrovate, true, x + 2, false,
+            new CalcoloPosizione(){
+                @Override
+                public int get(int i, int x, int y) {
+                    return Scacchiera.getPos(i, y + 1);
                 }
-                break;
-            }
-        }
+        });
 
         //SX
-        for(int i = x; i > 0; --i){
-            int tmpPos = Scacchiera.getPos(i, y + 1);
-
-            if(s.scacchiera.isFree(tmpPos)){
-                possibiliAttacchi.add(tmpPos);
-            }else{
-                if(s.scacchiera.isNotFree(tmpPos)
-                    && s.scacchiera.isEnemy(pos, tmpPos)){
-                    possibiliAttacchi.add(tmpPos);
+        controlloLaterale(s, enemyScan, posizioniTrovate, false, x, false,
+            new CalcoloPosizione(){
+                @Override
+                public int get(int i, int x, int y) {
+                    return Scacchiera.getPos(i, y + 1);
                 }
-                break;
-            }
-        }
+        });
         
         //UP
-        for(int i = y + 2; i <= Scacchiera.MAX; ++i){
-            int tmpPos = Scacchiera.getPos(x + 1, i);
-
-            if(s.scacchiera.isFree(tmpPos)){
-                possibiliAttacchi.add(tmpPos);
-            }else{
-                if(s.scacchiera.isNotFree(tmpPos)
-                    && s.scacchiera.isEnemy(pos, tmpPos)){
-                    possibiliAttacchi.add(tmpPos);
+        controlloLaterale(s, enemyScan, posizioniTrovate, true, y + 2, false,
+            new CalcoloPosizione(){
+                @Override
+                public int get(int i, int x, int y) {
+                    return Scacchiera.getPos(x + 1, i);
                 }
-                break;
-            }
-        }
+        });
         
         //DOWN
-        for(int i = y; i > 0; --i){
-            int tmpPos = Scacchiera.getPos(x + 1, i);
-
-            if(s.scacchiera.isFree(tmpPos)){
-                possibiliAttacchi.add(tmpPos);
-            }else{
-                if(s.scacchiera.isNotFree(tmpPos)
-                    && s.scacchiera.isEnemy(pos, tmpPos)){
-                    possibiliAttacchi.add(tmpPos);
+        controlloLaterale(s, enemyScan, posizioniTrovate, false, y, false,
+            new CalcoloPosizione(){
+                @Override
+                public int get(int i, int x, int y) {
+                    return Scacchiera.getPos(x + 1, i);
                 }
-                break;
-            }
-        }
-        
-        return possibiliAttacchi;  
-      }
+        });
+      
+        return posizioniTrovate;
+    }
+
 }

@@ -7,7 +7,13 @@ import clei.scacchi.pezzi.*;
 
 public class Scacchiera{
     ArrayList<ArrayList<Casella>> scacchiera = new ArrayList<ArrayList<Casella>>();
-    
+
+    Re reBianco;
+    ArrayList<Pezzo> pezziBianchi = new ArrayList<>();
+
+    Re reNero;
+    ArrayList<Pezzo> pezziNeri = new ArrayList<>();
+
     public static int MAX = 8;
 
     public static int getX(int pos){
@@ -19,7 +25,21 @@ public class Scacchiera{
     }
 
     public static int getPos(int x, int y){
+        if(x <= 0 || y <= 0){
+            return 0;
+        }
         return (x * 10) + y;
+    }
+
+
+    void addPezzo(int x, int y, Pezzo pezzo){
+        scacchiera.get(x).get(y).pezzo = pezzo;
+
+        if(pezzo.white){
+            pezziBianchi.add(pezzo);
+        }else{
+            pezziNeri.add(pezzo);
+        }
     }
 
     Scacchiera(){
@@ -35,39 +55,41 @@ public class Scacchiera{
 
         //CARICAMENTO PEDONI
         for(int i = 0; i < MAX; ++i){
-            for(int j = 0; j < MAX; ++j){
-                scacchiera.get(1).get(j).pezzo = new Pedone(Colors.WHITE);
-                scacchiera.get(6).get(j).pezzo = new Pedone(Colors.BLACK);
-            }
+            addPezzo(1, i, new Pedone(Colors.WHITE));
+            addPezzo(6, i, new Pedone(Colors.BLACK));
         }
 
         //SCHIERAMENTO TORRI
-        scacchiera.get(0).get(0).pezzo = new Torre(Colors.WHITE);
-        scacchiera.get(0).get(7).pezzo = new Torre(Colors.WHITE);
+        addPezzo(0, 0, new Torre(Colors.WHITE));
+        addPezzo(0, 7, new Torre(Colors.WHITE));
 
-        scacchiera.get(7).get(0).pezzo = new Torre(Colors.BLACK);
-        scacchiera.get(7).get(7).pezzo = new Torre(Colors.BLACK);
-        
+        addPezzo(7, 0, new Torre(Colors.BLACK));
+        addPezzo(7, 7, new Torre(Colors.BLACK));
+
         //SCHIERAMENTO CAVALLI
-        scacchiera.get(0).get(1).pezzo = new Cavallo(Colors.WHITE);
-        scacchiera.get(0).get(6).pezzo = new Cavallo(Colors.WHITE);
+        addPezzo(0, 1, new Cavallo(Colors.WHITE));
+        addPezzo(0, 6, new Cavallo(Colors.WHITE));
 
-        scacchiera.get(7).get(1).pezzo = new Cavallo(Colors.BLACK);
-        scacchiera.get(7).get(6).pezzo = new Cavallo(Colors.BLACK);
+        addPezzo(7, 1, new Cavallo(Colors.BLACK));
+        addPezzo(7, 6, new Cavallo(Colors.BLACK));
 
         //SCHIERAMENTO ALFIERI
-        scacchiera.get(0).get(2).pezzo = new Alfiere(Colors.WHITE);
-        scacchiera.get(0).get(5).pezzo = new Alfiere(Colors.WHITE);
+        addPezzo(0, 2, new Alfiere(Colors.WHITE));
+        addPezzo(0, 5, new Alfiere(Colors.WHITE));
 
-        scacchiera.get(7).get(2).pezzo = new Alfiere(Colors.BLACK);
-        scacchiera.get(7).get(5).pezzo = new Alfiere(Colors.BLACK);
+        addPezzo(7, 2, new Alfiere(Colors.BLACK));
+        addPezzo(7, 5, new Alfiere(Colors.BLACK));
 
-        //SCHIERAMENTO RE e REGINE
-        scacchiera.get(0).get(4).pezzo = new Re(Colors.WHITE);
-        scacchiera.get(7).get(4).pezzo = new Re(Colors.BLACK);
+        //SCHIERAMENTO REGINE
+        addPezzo(0, 3, new Regina(Colors.WHITE));
+        addPezzo(7, 3, new Regina(Colors.BLACK));
 
-        scacchiera.get(0).get(3).pezzo = new Regina(Colors.WHITE);
-        scacchiera.get(7).get(3).pezzo = new Regina(Colors.BLACK);
+        //SCHIERAMENTO RE
+        reBianco = new Re(Colors.WHITE);
+        addPezzo(0, 4, reBianco);
+        
+        reNero = new Re(Colors.BLACK);
+        addPezzo(7, 4, reNero);
     }
 
     @Override
@@ -110,7 +132,7 @@ public class Scacchiera{
     }
 
     public static boolean isValidPos(int pos){
-        return isValid(getX(pos)) && isValid(getY(pos));
+        return pos != 0 && isValid(getX(pos)) && isValid(getY(pos));
     }
 
     public boolean isFree(int pos){

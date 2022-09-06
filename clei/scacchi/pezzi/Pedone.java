@@ -60,43 +60,43 @@ public class Pedone extends Pezzo{
 
         if(white){
             if(Scacchiera.isValid(x + 1) && Scacchiera.isValid(y + 1)){
-                int attDx = (x + 2)*10 + (y + 2);
+                int tmpPos = (x + 2)*10 + (y + 2);
                 
-                if(s.scacchiera.isFree(attDx) 
-                    || (s.scacchiera.isNotFree(attDx) 
-                        && s.scacchiera.isEnemy(pos, attDx))
+                if(s.scacchiera.isFree(tmpPos) 
+                    && (s.scacchiera.isNotFree(tmpPos) 
+                        && s.scacchiera.isEnemy(pos, tmpPos))
                 )
-                    possibiliAttacchi.add(attDx);
+                    possibiliAttacchi.add(tmpPos);
             }
     
             if(Scacchiera.isValid(x - 1) && Scacchiera.isValid(y + 1)){
-                int attSx = x*10 + (y + 2);
+                int tmpPos = x*10 + (y + 2);
                 
-                if(Scacchiera.isValidPos(attSx)
-                    || (s.scacchiera.isNotFree(attSx) 
-                        && s.scacchiera.isEnemy(pos, attSx))
+                if(Scacchiera.isValidPos(tmpPos)
+                    && (s.scacchiera.isNotFree(tmpPos) 
+                        && s.scacchiera.isEnemy(pos, tmpPos))
                 )
-                    possibiliAttacchi.add(attSx);
+                    possibiliAttacchi.add(tmpPos);
             }
         }else{
             if(Scacchiera.isValid(x - 1) && Scacchiera.isValid(y - 1)){
-                int attDx = x*10 + y;
+                int tmpPos = x*10 + y;
                 
-                if(Scacchiera.isValidPos(attDx)
-                    || (s.scacchiera.isNotFree(attDx) 
-                        && s.scacchiera.isEnemy(pos, attDx))
+                if(Scacchiera.isValidPos(tmpPos)
+                    && (s.scacchiera.isNotFree(tmpPos) 
+                        && s.scacchiera.isEnemy(pos, tmpPos))
                 )
-                    possibiliAttacchi.add(attDx);
+                    possibiliAttacchi.add(tmpPos);
             }
     
             if(Scacchiera.isValid(x + 1) && Scacchiera.isValid(y - 1)){
-                int attSx = (x + 2)*10 + y;
+                int tmpPos = (x + 2)*10 + y;
                 
-                if(Scacchiera.isValidPos(attSx)
-                    || (s.scacchiera.isNotFree(attSx) 
-                        && s.scacchiera.isEnemy(pos, attSx))
+                if(Scacchiera.isValidPos(tmpPos)
+                    && (s.scacchiera.isNotFree(tmpPos) 
+                        && s.scacchiera.isEnemy(pos, tmpPos))
                 )
-                    possibiliAttacchi.add(attSx);
+                    possibiliAttacchi.add(tmpPos);
             }
         }
 
