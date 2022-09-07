@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Alfiere extends Pezzo{
 
     public Alfiere(boolean white) {
-        super("A", white);
+        super(LABEL_ALFIERE, white);
     }
 
     public boolean spostamentoPotenziale(Stato s, int target){
@@ -55,5 +55,10 @@ public class Alfiere extends Pezzo{
         controlloDiagonale(s, enemyScan, posizioniTrovate, true, false, x + 2, y, false);
         
         return posizioniTrovate;
+    }
+
+    @Override
+    public Pezzo copy() {
+        return new Alfiere(white);
     }
 }

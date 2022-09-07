@@ -9,7 +9,7 @@ import clei.scacchi.Stato;
 
 public class Regina extends Pezzo {
     public Regina(boolean white){
-        super("D", white);
+        super(LABEL_REGINA, white);
     }    
 
     public boolean spostamentoPotenziale(Stato s, int target){
@@ -87,5 +87,10 @@ public class Regina extends Pezzo {
             }
         });
         return posizioniTrovate;
+    }
+
+    @Override
+    public Pezzo copy() {
+        return new Regina(white);
     }
 }

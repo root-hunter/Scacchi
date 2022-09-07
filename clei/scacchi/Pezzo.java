@@ -14,6 +14,17 @@ abstract public class Pezzo
     public String label;
     public boolean white;
 
+    public static final String LABEL_PEDONE = "P";
+    public static final String LABEL_CAVALLO = "C";
+    public static final String LABEL_ALFIERE = "A";
+    public static final String LABEL_TORRE = "T";
+    public static final String LABEL_RE = "R";
+    public static final String LABEL_REGINA = "D";
+
+    public static final boolean WHITE = true;
+    public static final boolean BLACK = false;
+
+
     public Pezzo(String label, boolean white){
         this.label = label;
         this.white = white;
@@ -23,6 +34,8 @@ abstract public class Pezzo
     public String toString() {
         return white ? label.toUpperCase() : label.toLowerCase();
     }
+
+    public abstract Pezzo copy();
 
     public abstract class CalcoloPosizione{
         public abstract int get(int i, int x, int y);

@@ -2,7 +2,6 @@ package clei.scacchi;
 
 import java.util.ArrayList;
 
-import clei.scacchi.pezzi.Colors;
 import clei.scacchi.pezzi.*;
 
 public class Scacchiera{
@@ -42,8 +41,72 @@ public class Scacchiera{
         }
     }
 
+    //COSTRUTTORE PER DEEP COPY
+    Scacchiera(Scacchiera that){
+        initCaselle();
+
+        for(int i = 0; i < MAX; ++i){
+            for(int j = 0; j < MAX; ++j){
+                Pezzo tmp = that.get(getPos(j + 1, i + 1));
+
+                if(tmp != null){
+                    Pezzo tmpCopy = tmp.copy();
+                    if(tmp.white){
+                        pezziBianchi.add(tmpCopy);
+                    }else{
+                        pezziNeri.add(tmpCopy);
+                    }
+                    
+                    scacchiera.get(i).get(j).pezzo = tmpCopy;
+                }
+            }
+        }
+    }
+
     Scacchiera(){
         //INIZIALIZZAZIONE CASELLE E INDICI
+        initCaselle();
+
+        //CARICAMENTO PEDONI
+        for(int i = 0; i < MAX; ++i){
+            addPezzo(1, i, new Pedone(Pezzo.WHITE));
+            addPezzo(6, i, new Pedone(Pezzo.BLACK));
+        }
+
+        //SCHIERAMENTO TORRI
+        addPezzo(0, 0, new Torre(Pezzo.WHITE));
+        addPezzo(0, 7, new Torre(Pezzo.WHITE));
+
+        addPezzo(7, 0, new Torre(Pezzo.BLACK));
+        addPezzo(7, 7, new Torre(Pezzo.BLACK));
+
+        //SCHIERAMENTO CAVALLI
+        addPezzo(0, 1, new Cavallo(Pezzo.WHITE));
+        addPezzo(0, 6, new Cavallo(Pezzo.WHITE));
+
+        addPezzo(7, 1, new Cavallo(Pezzo.BLACK));
+        addPezzo(7, 6, new Cavallo(Pezzo.BLACK));
+
+        //SCHIERAMENTO ALFIERI
+        addPezzo(0, 2, new Alfiere(Pezzo.WHITE));
+        addPezzo(0, 5, new Alfiere(Pezzo.WHITE));
+
+        addPezzo(7, 2, new Alfiere(Pezzo.BLACK));
+        addPezzo(7, 5, new Alfiere(Pezzo.BLACK));
+
+        //SCHIERAMENTO REGINE
+        addPezzo(0, 3, new Regina(Pezzo.WHITE));
+        addPezzo(7, 3, new Regina(Pezzo.BLACK));
+
+        //SCHIERAMENTO RE
+        reBianco = new Re(Pezzo.WHITE);
+        addPezzo(0, 4, reBianco);
+        
+        reNero = new Re(Pezzo.BLACK);
+        addPezzo(7, 4, reNero);
+    }
+
+    private void initCaselle() {
         for(int i = 0; i < MAX; ++i){
             ArrayList<Casella> tmp = new ArrayList<Casella>();
 
@@ -52,44 +115,6 @@ public class Scacchiera{
             }
             scacchiera.add(tmp);
         }
-
-        //CARICAMENTO PEDONI
-        for(int i = 0; i < MAX; ++i){
-            addPezzo(1, i, new Pedone(Colors.WHITE));
-            addPezzo(6, i, new Pedone(Colors.BLACK));
-        }
-
-        //SCHIERAMENTO TORRI
-        addPezzo(0, 0, new Torre(Colors.WHITE));
-        addPezzo(0, 7, new Torre(Colors.WHITE));
-
-        addPezzo(7, 0, new Torre(Colors.BLACK));
-        addPezzo(7, 7, new Torre(Colors.BLACK));
-
-        //SCHIERAMENTO CAVALLI
-        addPezzo(0, 1, new Cavallo(Colors.WHITE));
-        addPezzo(0, 6, new Cavallo(Colors.WHITE));
-
-        addPezzo(7, 1, new Cavallo(Colors.BLACK));
-        addPezzo(7, 6, new Cavallo(Colors.BLACK));
-
-        //SCHIERAMENTO ALFIERI
-        addPezzo(0, 2, new Alfiere(Colors.WHITE));
-        addPezzo(0, 5, new Alfiere(Colors.WHITE));
-
-        addPezzo(7, 2, new Alfiere(Colors.BLACK));
-        addPezzo(7, 5, new Alfiere(Colors.BLACK));
-
-        //SCHIERAMENTO REGINE
-        addPezzo(0, 3, new Regina(Colors.WHITE));
-        addPezzo(7, 3, new Regina(Colors.BLACK));
-
-        //SCHIERAMENTO RE
-        reBianco = new Re(Colors.WHITE);
-        addPezzo(0, 4, reBianco);
-        
-        reNero = new Re(Colors.BLACK);
-        addPezzo(7, 4, reNero);
     }
 
     @Override
@@ -107,7 +132,6 @@ public class Scacchiera{
     }
 
     public Pezzo get(int pos){
-
         return scacchiera
             .get(getY(pos))
             .get(getX(pos))

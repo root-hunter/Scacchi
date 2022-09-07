@@ -9,7 +9,7 @@ import clei.scacchi.Stato;
 public class Pedone extends Pezzo{
 
     public Pedone(boolean white) {
-        super("P", white);
+        super(LABEL_PEDONE, white);
     }
 
     public boolean spostamentoPotenziale(Stato s, int target){
@@ -101,5 +101,10 @@ public class Pedone extends Pezzo{
         }
 
         return possibiliAttacchi;
+    }
+
+    @Override
+    public Pezzo copy() {
+        return new Pedone(white);
     }
 }

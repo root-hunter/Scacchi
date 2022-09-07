@@ -9,8 +9,10 @@ import clei.scacchi.Stato;
 public class Cavallo extends Pezzo{
 
     public Cavallo(boolean white) {
-        super("C", white);
+        super(LABEL_CAVALLO, white);
     }
+
+    
 
     public boolean spostamentoPotenziale(Stato s, int target){
         return listaSpostamentoPotenziale(s).contains(target);
@@ -44,10 +46,7 @@ public class Cavallo extends Pezzo{
             };
         
             for(int[] k : offsets){
-                int k1 = k[0];
-                int k2 = k[1];
-
-                int tmpPos = Scacchiera.getPos(x + k1, y + k2);
+                int tmpPos = Scacchiera.getPos(x + k[0], y + k[1]);
                 
                 if(Scacchiera.isValidPos(tmpPos)){
                     if(s.scacchiera.isFree(tmpPos)){
@@ -63,6 +62,11 @@ public class Cavallo extends Pezzo{
         }
        
         return posizioniTrovate;
+    }
+
+    @Override
+    public Pezzo copy() {
+        return new Cavallo(white);
     }
 
 }

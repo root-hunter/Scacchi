@@ -8,7 +8,7 @@ import clei.scacchi.Stato;
 
 public class Torre extends Pezzo{
     public Torre(boolean white) {
-        super("T", white);
+        super(LABEL_TORRE, white);
     }
 
     public boolean spostamentoPotenziale(Stato s, int target){
@@ -78,6 +78,11 @@ public class Torre extends Pezzo{
         });
       
         return posizioniTrovate;
+    }
+
+    @Override
+    public Pezzo copy() {
+        return new Torre(white);
     }
 
 }
