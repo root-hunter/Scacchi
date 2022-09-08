@@ -1,38 +1,45 @@
 package clei.scacchi;
 
+import clei.scacchi.partita.Partita;
+
 public class Main {
     public static void main(String[] args) {
-        // Giocatore bianco = new Giocatore("BIANCO");
-        // Giocatore nero = new Giocatore("NERO");
-
-        // Stato stato = new Stato(true);
-
-        // stato.scacchiera.scacchiera.get(3).get(3).pezzo = 
-        // stato.scacchiera.scacchiera.get(0).get(4).pezzo;
-        // stato.scacchiera.scacchiera.get(0).get(4).pezzo = null;
-   
-        // stato.scacchiera.scacchiera.get(5).get(5).pezzo = 
-        // stato.scacchiera.scacchiera.get(7).get(5).pezzo;
-        // stato.scacchiera.scacchiera.get(7).get(5).pezzo = null;
-
-        // System.out.println(stato.scacchiera.toString());
-        // System.out.println(stato.scacco());
-
-        // System.out.println(stato.simulaSpostamentoOCattura(44, 45)
-        // .scacco());
-
-
         Partita partita = new Partita();
 
         try{
-            partita.eseguiMossa(22, 24);
-            partita.eseguiMossa(27, 26);
+            // TEST PROMOZIONE PEDONE BIANCO IN REGINA
+            // partita.eseguiMossa(32, 34);
+            // partita.eseguiMossa(47, 45);
 
-            partita.eseguiMossa(42, 44);
-            partita.eseguiMossa(47, 46);
-            
-            partita.eseguiMossa(41, 43);
-            partita.eseguiMossa(48, 47);
+            // partita.eseguiMossa(34, 45);
+            // partita.eseguiMossa(57, 55);
+
+            // partita.eseguiMossa(45, 46);
+            // partita.eseguiMossa(48, 84);
+
+            // partita.eseguiMossa(46, 47);
+            // partita.eseguiMossa(58, 57);
+
+            // partita.eseguiMossa(47, 48);
+            // partita.eseguiMossa(57, 56);
+
+            // partita.eseguiMossa(48, 43);
+            // partita.eseguiMossa(55, 54);
+
+
+            // TEST SCACCO MATTO IN 3 MOSSE
+            // partita.eseguiMossa(52, 54);
+            // partita.eseguiMossa(67, 65);
+
+            // partita.eseguiMossa(54, 65);
+            // partita.eseguiMossa(77, 75);
+
+            // partita.eseguiMossa(41, 85);
+            // partita.eseguiMossa(48, 57);
+
+            System.out.println(partita.statoCorrente.scaccoMatto());
+
+
         }catch(Exception e){
             System.err.println(e);
         }
