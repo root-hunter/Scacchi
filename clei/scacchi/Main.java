@@ -24,7 +24,6 @@ public class Main {
             // partita.eseguiMossa(48, 43);
             // partita.eseguiMossa(55, 54);
 
-
             // TEST SCACCO MATTO IN 3 MOSSE
             // partita.eseguiMossa(52, 54);
             // partita.eseguiMossa(67, 65);
@@ -36,19 +35,29 @@ public class Main {
             // partita.eseguiMossa(48, 57);
 
             //TEST ARROCCO
+            // partita.eseguiMossa(52, 54);
+            // partita.eseguiMossa(57, 55);
+
+            // partita.eseguiMossa(61, 43);
+            // partita.eseguiMossa(27, 25);
+
+            // partita.eseguiMossa(71, 83);
+            // partita.eseguiMossa(78, 86);
+
+            // partita.eseguiMossa(51, 71);
+            // partita.eseguiMossa(17, 16);
+
+            //TEST EN PASSANT
             partita.eseguiMossa(52, 54);
-            partita.eseguiMossa(57, 55);
+            partita.eseguiMossa(67, 65);
 
-            partita.eseguiMossa(61, 43);
-            partita.eseguiMossa(27, 25);
+            partita.eseguiMossa(54, 55);
+            partita.eseguiMossa(47, 45);
 
-            partita.eseguiMossa(71, 83);
-            partita.eseguiMossa(78, 86);
+            partita.eseguiMossa(55, 66);
+            partita.eseguiMossa(45, 44);
 
-            partita.eseguiMossa(51, 71);
-            partita.eseguiMossa(17, 16);
-
-           
+            partita.eseguiMossa(32, 43);
 
         }catch(Exception e){
             System.err.println(e);
