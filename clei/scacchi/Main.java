@@ -55,10 +55,17 @@ public class Main {
             partita.eseguiMossa(47, 45);
 
             partita.eseguiMossa(55, 46);
-            partita.eseguiMossa(45, 44);
+            partita.eseguiMossa(17, 16);
 
-            partita.eseguiMossa(32, 34);
-            partita.eseguiMossa(44, 33);
+            partita.eseguiMossa(46, 57);
+            partita.eseguiMossa(38, 47);
+
+            partita.eseguiMossa(41, 85);
+            partita.eseguiMossa(77, 76);
+
+            partita.eseguiMossa(85, 76);
+
+
 
         }catch(Exception e){
             System.err.println(e);

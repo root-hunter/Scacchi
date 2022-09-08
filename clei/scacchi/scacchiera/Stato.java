@@ -229,6 +229,27 @@ public class Stato {
             ){
                 stato.enPassantPos = to;
             }
+            
+            if(!stato.partita.mosse.isEmpty()){
+                Stato vecchioStato = stato.partita.mosse.get(stato.partita.mosse.size() - 1);
+    
+                if(vecchioStato.checkEnPassant()){
+                    int tmpEnPassantPos = giocatoreDiTurno 
+                            ? vecchioStato.enPassantPos + 1 
+                            : vecchioStato.enPassantPos - 1;
+                    
+                    if(to == tmpEnPassantPos){
+                        int x = Scacchiera.getX(vecchioStato.enPassantPos);
+                        int y = Scacchiera.getY(vecchioStato.enPassantPos);
+
+                        stato.scacchiera.scacchiera.get(y).get(x).pezzo.elimina();
+                        stato.scacchiera.scacchiera.get(y).get(x).pezzo = null;
+                    }
+                                    
+                }else{
+
+                }
+            }
 
             if((stato.giocatoreDiTurno 
             ? stato.scacchiera.casePromozioneBianco.contains(casellaTo)

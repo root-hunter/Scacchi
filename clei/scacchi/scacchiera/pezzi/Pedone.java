@@ -2,8 +2,6 @@ package clei.scacchi.scacchiera.pezzi;
 
 import java.util.ArrayList;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.ParagraphAction;
-
 import clei.scacchi.scacchiera.Scacchiera;
 import clei.scacchi.scacchiera.Stato;
 
@@ -78,18 +76,6 @@ public class Pedone extends Pezzo{
             Stato vecchioStato = s.partita.mosse.get(s.partita.mosse.size() - 1);
 
             if(vecchioStato.checkEnPassant()){
-                System.out.println("_____________________________");
-                System.out.println(pos + 10);
-                System.out.println(pos - 10);
-                System.out.println(x);
-                System.out.println(y);
-                System.out.println(Scacchiera.getPos(x, y));
-                System.out.println(vecchioStato.enPassantPos);
-
-                System.out.println("_____________________________");
-                
-
-
                 if(white){
                     if(pos + 10 == vecchioStato.enPassantPos){
                         possibiliAttacchi.add(Scacchiera.getPos(x + 2, y + 2));
