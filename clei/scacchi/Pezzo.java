@@ -9,21 +9,21 @@ interface IPezzo{
     public abstract ArrayList<Integer> listaAttacco (Stato s);
 }
 
-abstract public class Pezzo
+public abstract class Pezzo
  implements IPezzo{
-    public String label;
-    public boolean white;
-
     public static final String LABEL_PEDONE = "P";
     public static final String LABEL_CAVALLO = "C";
     public static final String LABEL_ALFIERE = "A";
     public static final String LABEL_TORRE = "T";
     public static final String LABEL_RE = "R";
     public static final String LABEL_REGINA = "D";
+   
+    public String label;
+    public boolean white;
+    public boolean eliminato = false;
 
     public static final boolean WHITE = true;
     public static final boolean BLACK = false;
-
 
     public Pezzo(String label, boolean white){
         this.label = label;
@@ -41,6 +41,10 @@ abstract public class Pezzo
         public abstract int get(int i, int x, int y);
     }
 
+    public void elimina(){
+        this.eliminato = true;
+    }
+
     public void controlloDiagonale(Stato s, boolean enemyScan,
      ArrayList<Integer> posizioniTrovate,
       boolean incI, boolean incJ, int startI, int startJ, boolean king) {
@@ -56,7 +60,6 @@ abstract public class Pezzo
             if(s.scacchiera.isFree(tmpPos)){
                 posizioniTrovate.add(tmpPos);
             }else{
-
                 if(enemyScan && s.scacchiera.isNotFree(tmpPos) 
                     && s.scacchiera.isEnemy(pos, tmpPos)){
                     posizioniTrovate.add(tmpPos);

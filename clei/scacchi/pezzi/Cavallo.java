@@ -12,8 +12,6 @@ public class Cavallo extends Pezzo{
         super(LABEL_CAVALLO, white);
     }
 
-    
-
     public boolean spostamentoPotenziale(Stato s, int target){
         return listaSpostamentoPotenziale(s).contains(target);
     }

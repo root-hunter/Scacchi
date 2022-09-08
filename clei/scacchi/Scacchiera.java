@@ -7,10 +7,10 @@ import clei.scacchi.pezzi.*;
 public class Scacchiera{
     ArrayList<ArrayList<Casella>> scacchiera = new ArrayList<ArrayList<Casella>>();
 
-    Re reBianco;
+    Pezzo reBianco;
     ArrayList<Pezzo> pezziBianchi = new ArrayList<>();
 
-    Re reNero;
+    Pezzo reNero;
     ArrayList<Pezzo> pezziNeri = new ArrayList<>();
 
     public static int MAX = 8;
@@ -29,7 +29,6 @@ public class Scacchiera{
         }
         return (x * 10) + y;
     }
-
 
     void addPezzo(int x, int y, Pezzo pezzo){
         scacchiera.get(x).get(y).pezzo = pezzo;
@@ -52,8 +51,14 @@ public class Scacchiera{
                 if(tmp != null){
                     Pezzo tmpCopy = tmp.copy();
                     if(tmp.white){
+                        if(tmpCopy instanceof Re){
+                            reBianco = tmpCopy;
+                        }
                         pezziBianchi.add(tmpCopy);
                     }else{
+                        if(tmpCopy instanceof Re){
+                            reNero = tmpCopy;
+                        }
                         pezziNeri.add(tmpCopy);
                     }
                     

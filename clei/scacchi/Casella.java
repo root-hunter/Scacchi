@@ -8,12 +8,7 @@ public class Casella {
 
     @Override
     public String toString() {
-        //return pezzo != null ? pezzo.toString()+" " : x+""+y+" ";
-        
-        
-
         return pezzo != null ? pezzo.toString()+" " : ". ";
-    
     }
 
     int getPos(){

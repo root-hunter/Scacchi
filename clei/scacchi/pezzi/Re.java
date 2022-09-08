@@ -38,7 +38,6 @@ public class Re extends Pezzo{
         int y = Scacchiera.getY(pos);
 
         //POSSIBILE ESECUZIONE IN PARALLELO (MULTI THREAD)
-
         boolean king = true;
         
         //UP
