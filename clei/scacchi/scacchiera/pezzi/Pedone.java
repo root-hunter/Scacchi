@@ -53,6 +53,7 @@ public class Pedone extends Pezzo{
 
     public ArrayList<Integer> listaAttacco(Stato s){
         ArrayList<Integer> possibiliAttacchi = new ArrayList<>();
+        ArrayList<Integer> tmp = new ArrayList<>();
 
         int pos = s.scacchiera.get(this);
         
@@ -60,29 +61,47 @@ public class Pedone extends Pezzo{
         int y = Scacchiera.getY(pos);
 
         //NW
-        controlloDiagonale(s, true, possibiliAttacchi, false, true, x, y + 2, true);
+        controlloDiagonale(s, true, tmp, false, true, x, y + 2, true);
 
         //NE
-        controlloDiagonale(s, true, possibiliAttacchi, true, true, x + 2, y + 2, true);
+        controlloDiagonale(s, true, tmp, true, true, x + 2, y + 2, true);
 
-        for(int i = 0; i < possibiliAttacchi.size(); ++i){
-            int p = possibiliAttacchi.get(i);
-            if(s.scacchiera.get(p) == null || s.scacchiera.get(p).white == white){
-                possibiliAttacchi.remove(i);
+        for(int i = 0; i < tmp.size(); ++i){
+            int p = tmp.get(i);
+            if(s.scacchiera.get(p) != null && s.scacchiera.get(p).white != white){
+                possibiliAttacchi.add(p);
             }
         }
 
         //EN PASSANT
-
         if(!s.partita.mosse.isEmpty()){
             Stato vecchioStato = s.partita.mosse.get(s.partita.mosse.size() - 1);
 
             if(vecchioStato.checkEnPassant()){
+                System.out.println("_____________________________");
                 System.out.println(pos + 10);
                 System.out.println(pos - 10);
+                System.out.println(x);
+                System.out.println(y);
+                System.out.println(Scacchiera.getPos(x, y));
+                System.out.println(vecchioStato.enPassantPos);
 
-                if(pos + 10 == vecchioStato.enPassantPos || pos - 10 == vecchioStato.enPassantPos){
-                    possibiliAttacchi.add(pos + 11);
+                System.out.println("_____________________________");
+                
+
+
+                if(white){
+                    if(pos + 10 == vecchioStato.enPassantPos){
+                        possibiliAttacchi.add(Scacchiera.getPos(x + 2, y + 2));
+                    }else if(pos - 10 == vecchioStato.enPassantPos){
+                        possibiliAttacchi.add(Scacchiera.getPos(x, y + 2));
+                    }
+                }else{
+                    if(pos + 10 == vecchioStato.enPassantPos){
+                        possibiliAttacchi.add(Scacchiera.getPos(x + 2, y));
+                    }else if(pos - 10 == vecchioStato.enPassantPos){
+                        possibiliAttacchi.add(Scacchiera.getPos(x, y));
+                    }
                 }
             }
         }
