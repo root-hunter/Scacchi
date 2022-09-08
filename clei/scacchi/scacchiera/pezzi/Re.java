@@ -10,6 +10,12 @@ public class Re extends Pezzo{
         super(LABEL_RE, white);
     }
 
+    Re(Re that) {
+        super(that.label, that.white);
+        this.mosso = that.mosso;
+        this.eliminato = that.eliminato;
+    }
+
     public boolean spostamentoPotenziale(Stato s, int target){
         return listaSpostamentoPotenziale(s).contains(target);
     }
@@ -56,6 +62,6 @@ public class Re extends Pezzo{
 
     @Override
     public Pezzo copy() {
-        return new Re(white);
+        return new Re(this);
     }
 }

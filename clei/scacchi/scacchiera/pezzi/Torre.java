@@ -9,6 +9,12 @@ public class Torre extends Pezzo{
         super(LABEL_TORRE, white);
     }
 
+    Torre(Torre that) {
+        super(that.label, that.white);
+        this.mosso = that.mosso;
+        this.eliminato = that.eliminato;
+    }
+
     public boolean spostamentoPotenziale(Stato s, int target){
         return listaSpostamentoPotenziale(s).contains(target);
     }
@@ -39,7 +45,7 @@ public class Torre extends Pezzo{
 
     @Override
     public Pezzo copy() {
-        return new Torre(white);
+        return new Torre(this);
     }
 
 }

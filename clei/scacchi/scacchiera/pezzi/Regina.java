@@ -8,6 +8,12 @@ public class Regina extends Pezzo {
         super(LABEL_REGINA, white);
     }    
 
+    Regina(Regina that) {
+        super(that.label, that.white);
+        this.mosso = that.mosso;
+        this.eliminato = that.eliminato;
+    }
+
     public boolean spostamentoPotenziale(Stato s, int target){
         return listaSpostamentoPotenziale(s).contains(target);
     }
@@ -37,6 +43,6 @@ public class Regina extends Pezzo {
 
     @Override
     public Pezzo copy() {
-        return new Regina(white);
+        return new Regina(this);
     }
 }

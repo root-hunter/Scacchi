@@ -10,6 +10,13 @@ public class Cavallo extends Pezzo{
         super(LABEL_CAVALLO, white);
     }
 
+    Cavallo(Cavallo that) {
+        super(that.label, that.white);
+        this.mosso = that.mosso;
+        this.eliminato = that.eliminato;
+    }
+
+
     public boolean spostamentoPotenziale(Stato s, int target){
         return listaSpostamentoPotenziale(s).contains(target);
     }
@@ -61,7 +68,7 @@ public class Cavallo extends Pezzo{
 
     @Override
     public Pezzo copy() {
-        return new Cavallo(white);
+        return new Cavallo(this);
     }
 
 }

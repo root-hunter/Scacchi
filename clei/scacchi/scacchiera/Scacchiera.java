@@ -146,6 +146,10 @@ public class Scacchiera{
         return buffer;
     }
 
+    public Casella getCasella(int x, int y){
+        return scacchiera.get(y).get(x);
+    }
+
     public Pezzo get(int pos){
         return scacchiera
             .get(getY(pos))

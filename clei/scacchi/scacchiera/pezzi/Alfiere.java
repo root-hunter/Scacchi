@@ -10,6 +10,12 @@ public class Alfiere extends Pezzo{
         super(LABEL_ALFIERE, white);
     }
 
+    Alfiere(Alfiere that) {
+        super(that.label, that.white);
+        this.mosso = that.mosso;
+        this.eliminato = that.eliminato;
+    }
+
     public boolean spostamentoPotenziale(Stato s, int target){
         return listaSpostamentoPotenziale(s).contains(target);
     }
@@ -40,6 +46,6 @@ public class Alfiere extends Pezzo{
 
     @Override
     public Pezzo copy() {
-        return new Alfiere(white);
+        return new Alfiere(this);
     }
 }

@@ -21,7 +21,7 @@ public abstract class Pezzo
     protected static final String LABEL_RE = "R";
     protected static final String LABEL_REGINA = "D";
    
-    protected String label;
+    public String label;
     
     public boolean white;
     public boolean eliminato = false;

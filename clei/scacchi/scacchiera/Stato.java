@@ -115,28 +115,8 @@ public class Stato {
                     }
                     
                     for(int mossa : possibiliMosse){
-                        int mossaX = Scacchiera.getY(mossa);
-                        int mossaY = Scacchiera.getX(mossa);
-    
-                        int oldX = Scacchiera.getY(scacchiera.get(pezzo));
-                        int oldY = Scacchiera.getX(scacchiera.get(pezzo));
-                        
-                        //SIMULAZIONE MOSSA
-                        Pezzo tmpMossa = scacchiera.scacchiera.get(mossaX).get(mossaY).pezzo;
-                        scacchiera.scacchiera.get(mossaX).get(mossaY).pezzo 
-                            = scacchiera.scacchiera.get(oldX).get(oldY).pezzo;
-                        scacchiera.scacchiera.get(oldX).get(oldY).pezzo = null;
-    
-                        //System.out.println(scacchiera.toString());
-    
-                        boolean r = !scacco();
-                        
-                        //RITORNO STATO ORIGINALE
-                        scacchiera.scacchiera.get(oldX).get(oldY).pezzo 
-                            = scacchiera.scacchiera.get(mossaX).get(mossaY).pezzo;
-                        scacchiera.scacchiera.get(mossaX).get(mossaY).pezzo = tmpMossa;
-    
-                        if(r) return false;
+                        Stato tmp = simulaSpostamentoOCattura(scacchiera.get(pezzo), mossa);
+                        if(tmp != null && !tmp.scacco()) return false;
                     }
                     System.out.println(pezzo.toString()+": " +possibiliMosse);
                 }
@@ -147,6 +127,36 @@ public class Stato {
     }
 
     public boolean stallo(){
+        int k = 0;
+
+        //CONTROLLO PER LA REGOLA DELLA TRIPLICE RIPETIZIONE
+        for(Stato stato : partita.mosse){
+            boolean flag = true;
+
+            for(int i = 0; i < Scacchiera.MAX; ++i){
+                for(int j = 0; j < Scacchiera.MAX; ++j){
+                    Pezzo pezzoA = stato.scacchiera.getCasella(i, j).pezzo;
+                    Pezzo pezzoB = scacchiera.getCasella(i, j).pezzo;
+                    
+                    if(pezzoA != null && pezzoB != null){
+                        if(pezzoA.label != pezzoB.label 
+                            || pezzoA.white != pezzoB.white){
+                                flag = false;
+                            }
+                    }else{
+                        if(pezzoA != null || pezzoB != null){
+                            flag = false;
+                        }
+                    }
+                }
+                if(!flag) break;
+            }
+
+            if(flag) ++k;
+            if(k == 3) return true;
+        }
+
+
         for(Pezzo pezzo : (giocatoreDiTurno ? scacchiera.pezziBianchi : scacchiera.pezziNeri)){
             if(
                 !pezzo.eliminato 
@@ -242,12 +252,10 @@ public class Stato {
                         int x = Scacchiera.getX(vecchioStato.enPassantPos);
                         int y = Scacchiera.getY(vecchioStato.enPassantPos);
 
-                        stato.scacchiera.scacchiera.get(y).get(x).pezzo.elimina();
-                        stato.scacchiera.scacchiera.get(y).get(x).pezzo = null;
+                        stato.scacchiera.getCasella(x, y).pezzo.elimina();
+                        stato.scacchiera.getCasella(x, y).pezzo = null;
                     }
                                     
-                }else{
-
                 }
             }
 
@@ -270,31 +278,15 @@ public class Stato {
         ){
             if(casellaFrom.pezzo.white && from == 51){
                 if(to == 71 && checkArroccoBiancoDx()){
-                    Casella oldPosTorre = stato.scacchiera.scacchiera.get(0).get(7);
-                    Casella newPosTorre = stato.scacchiera.scacchiera.get(0).get(5);
-                    
-                    switchCasella(oldPosTorre, newPosTorre);
-                    stato.arroccoBianco = true;
+                    switchCasellaArrocco(stato, true, 7, 0, 5, 0);
                 }else if(to == 31 && checkArroccoBiancoSx()){
-                    Casella oldPosTorre = stato.scacchiera.scacchiera.get(0).get(0);
-                    Casella newPosTorre = stato.scacchiera.scacchiera.get(0).get(2);
-                    
-                    switchCasella(oldPosTorre, newPosTorre);
-                    stato.arroccoBianco = true;
+                    switchCasellaArrocco(stato, true, 0, 0, 2, 0);
                 }
             }else if(!casellaFrom.pezzo.white && from == 58){
                 if(to == 78 && checkArroccoNeroDx()){
-                    Casella oldPosTorre = stato.scacchiera.scacchiera.get(7).get(7);
-                    Casella newPosTorre = stato.scacchiera.scacchiera.get(7).get(5);
-                    
-                    switchCasella(oldPosTorre, newPosTorre);
-                    stato.arroccoNero = true;
+                    switchCasellaArrocco(stato, false, 7, 7, 5, 7);
                 }else if(to == 38 && checkArroccoNeroSx()){
-                    Casella oldPosTorre = stato.scacchiera.scacchiera.get(7).get(0);
-                    Casella newPosTorre = stato.scacchiera.scacchiera.get(7).get(2);
-                    
-                    switchCasella(oldPosTorre, newPosTorre);
-                    stato.arroccoNero = true;
+                    switchCasellaArrocco(stato, false, 0, 7, 2, 7);
                 }
             }
             switchCasella(casellaFrom, casellaTo);
@@ -304,6 +296,17 @@ public class Stato {
        
         ultimaMossa[0] = from;
         ultimaMossa[1] = to;
+    }
+
+    private void switchCasellaArrocco(Stato stato, boolean white, int x1, int y1, int x2, int y2) {
+        Casella c1 = stato.scacchiera.getCasella(x1, y1);
+        Casella c2 = stato.scacchiera.getCasella(x2, y2);
+        
+        switchCasella(c1, c2);
+        if(white)
+            stato.arroccoBianco = true;
+        else
+           stato.arroccoNero = true;
     }
 
     private void switchCasella(Casella casellaFrom, Casella casellaTo) {
