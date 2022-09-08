@@ -1,7 +1,5 @@
 package clei.scacchi;
 
-import clei.scacchi.partita.Partita;
-
 public class Main {
     public static void main(String[] args) {
         Partita partita = new Partita();
@@ -37,8 +35,20 @@ public class Main {
             // partita.eseguiMossa(41, 85);
             // partita.eseguiMossa(48, 57);
 
-            System.out.println(partita.statoCorrente.scaccoMatto());
+            //TEST ARROCCO
+            partita.eseguiMossa(52, 54);
+            partita.eseguiMossa(57, 55);
 
+            partita.eseguiMossa(61, 43);
+            partita.eseguiMossa(27, 25);
+
+            partita.eseguiMossa(71, 83);
+            partita.eseguiMossa(78, 86);
+
+            partita.eseguiMossa(51, 71);
+            partita.eseguiMossa(17, 16);
+
+           
 
         }catch(Exception e){
             System.err.println(e);
