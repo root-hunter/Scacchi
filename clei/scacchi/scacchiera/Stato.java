@@ -127,9 +127,9 @@ public class Stato {
     }
 
     public boolean stallo(){
-        int k = 0;
 
         //CONTROLLO PER LA REGOLA DELLA TRIPLICE RIPETIZIONE
+        int k = 0;
         for(Stato stato : partita.mosse){
             boolean flag = true;
 
@@ -143,10 +143,8 @@ public class Stato {
                             || pezzoA.white != pezzoB.white){
                                 flag = false;
                             }
-                    }else{
-                        if(pezzoA != null || pezzoB != null){
-                            flag = false;
-                        }
+                    }else if(pezzoA != null || pezzoB != null){
+                        flag = false;
                     }
                 }
                 if(!flag) break;
@@ -263,7 +261,6 @@ public class Stato {
             ? stato.scacchiera.casePromozioneBianco.contains(casellaTo)
              : stato.scacchiera.casePromozioneNero.contains(casellaTo))
              ){
-    
                     stato.scacchiera.pezziBianchi.remove(pedone);
                     casellaTo.pezzo = pedone.promozione(promozione);
     

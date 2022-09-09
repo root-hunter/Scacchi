@@ -55,16 +55,16 @@ public class Main {
             partita.eseguiMossa(47, 45);
 
             partita.eseguiMossa(55, 46);
-            //partita.eseguiMossa(17, 16);
+            partita.eseguiMossa(17, 16);
 
-            //partita.eseguiMossa(46, 57);
-            // partita.eseguiMossa(38, 47);
+            partita.eseguiMossa(46, 57);
+            partita.eseguiMossa(38, 47);
 
-            // partita.eseguiMossa(41, 85);
-            // partita.eseguiMossa(77, 76);
+            partita.eseguiMossa(41, 85);
+            partita.eseguiMossa(77, 76);
 
-            // partita.eseguiMossa(85, 76);
-            // partita.abbandona();
+            partita.eseguiMossa(85, 76);
+            partita.abbandona();
 
         }catch(EccezioneMossa e){
             System.err.println(e);
